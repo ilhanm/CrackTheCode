@@ -1,17 +1,17 @@
-#Crack the code, open the lock challenge
 constraintsList = [('690',1,1), ('741',1,0), ('504',2,0), ('387',0,0), ('219',1,0)]
 
-def checkNumber(number, checknumber, nr_correct, nr_correct_position):
-    count_nr_correct, count_nr_correct_position = 0,0
-    lnumber = str(number).zfill(len(str(checknumber)))
-    for i in range(len(checknumber)):
-        if lnumber[i] in checknumber:
-            count_nr_correct += 1
-        if lnumber[i] == checknumber[i]:
-            count_nr_correct_position += 1
-    return nr_correct == count_nr_correct and nr_correct_position == count_nr_correct_position
+def checkNumber(numberToCheck, number, numberOfCorrectDigit, numberOfCorrectPosition):
+    countedCorrectDigit, countedCorrectPosition = 0,0
+    digits = str(numberToCheck).zfill(len(str(number))) 
+    for i in range(len(number)):
+        if digits[i] in number:
+            countedCorrectDigit += 1
+        if digits[i] == number[i]:
+            countedCorrectPosition += 1
+    return numberOfCorrectDigit == countedCorrectDigit and numberOfCorrectPosition == countedCorrectPosition
 
 def lockFounder(constraints):
+    correctAnswers = []
     numberOfConstraints = len(constraints)
     for cnumber in range(1000):
         numberOfMatches=0
@@ -19,6 +19,7 @@ def lockFounder(constraints):
             if checkNumber(cnumber, *constraints[i]):
                 numberOfMatches+=1
                 if numberOfMatches == numberOfConstraints:
-                    print('found:', str(cnumber).zfill(3))
+                    correctAnswers.append(str(cnumber).zfill(3))
+    return correctAnswers
 
-lockFounder(constraintsList)
+print(lockFounder(constraintsList))  #['150', '420', '495']
